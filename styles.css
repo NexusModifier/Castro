@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #2f2f2f;
+  }
+  
+  .calendar-container {
+    width: 100%;
+    max-width: 600px;
+    background: #4b4b4b;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    overflow: hidden;
+  }
+  
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #87CEEB;
+    color: rgb(255, 255, 255);
+  }
+  
+  .nav-btn {
+    background: none;
+    border: none;
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    cursor: pointer;
+    width: 50px;   /* Larger clickable area */
+    height: 50px;  /* Larger clickable area */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;  /* Circular buttons */
+    transition: background-color 0.3s ease, transform 0.3s ease;  /* Smooth effects */
+  }
+  
+  .nav-btn:hover {
+    background-color: #0056b3; /* Darker background on hover */
+    transform: scale(1.1);  /* Slightly grow the button */
+  }
+  
+  .nav-btn:focus {
+    outline: none;
+  }
+  
+  .month-year {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .calendar-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 750px; /* Significantly increased height for the calendar body */
+  }
+  
+  .day-names {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+  }
+  
+  .days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr); /* Increased rows to ensure space for extra cells */
+    gap: 10px;
+    height: 100%; /* Ensure the grid takes up full height */
+  }
+  
+  .days-grid div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding-top: 30px;
+    text-align: center;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    border-radius: 5px;
+    background: #ffffff;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  
+  .days-grid div span {
+    position: absolute;
+    top: 10px;  /* Adjusted to position it at the top-left corner */
+    left: 10px; /* Left position for top-left corner */
+    font-weight: bold;
+    font-size: 16px; /* Smaller font size for the day number */
+  }
+  
+  .days-grid div:hover {
+    background-color: #d6d6ff;
+  }
+  
+  .days-grid .today {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+
+
+  .event-tooltip {
+    font-size: 12px;
+    color: #000000;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 2px 5px;
+    border-radius: 5px;
+    text-align: center;
+    display: none;  /* Hidden by default */
+  }
+
+  .event-text {
+    font-size: 12px;
+    color: #000000;
+    text-align: center;
+  }
