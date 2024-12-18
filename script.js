@@ -11,17 +11,26 @@ const eventData = {};  // Placeholder for event data (this will hold events for 
 
 // Fetch Astronomical Events from the Astronomy API
 async function fetchAstronomicalEvents(month, year) {
-  const apiKey = 'YOUR_API_KEY';  // Replace with your API key from Astronomy API or other services
-  const apiUrl = `https://api.astronomyapi.com/v2/astronomy/events?date=${year}-${month + 1}&apiKey=${apiKey}`;
+  const token = await authenticate();  // Get authentication token
+
+  const apiUrl = `https://api.astronomyapi.com/v2/astronomy/events?date=${year}-${month + 1}-01`;  // Modify to fetch for the entire month
   
   try {
-    const response = await fetch(apiUrl);
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch astronomical events');
+    }
+
     const data = await response.json();
-    
-    // Example response structure based on the API
-    // You may need to adjust based on the actual API response
     const events = data.data.events;
     
+    // Populate eventData with events for each date
     events.forEach(event => {
       const eventDate = event.date;  // Format: YYYY-MM-DD
       const eventDescription = event.name;  // Event name or description
@@ -132,3 +141,28 @@ setInterval(() => {
     initializeCalendar();
   }
 }, 60000);  // Update every minute
+
+
+// Authenticate and fetch the access token
+async function authenticate() {
+  const appId = '889a5049-4095-4bdb-8f86-b83b526e01fa'; // Replace with your actual app ID
+  const appSecret = '660cae464c0524e3fe7c04a995aa793d2661acbff8927149f1e8946c540a918d09fb12e8957c3f79c79f9defc06787786a238ff69426f145f4280a867ee92e9b7584ed64778ab13861cb51fdde761ad9d1211fa27656ea767c43b69069009ce3d895b323f2de413558a64b4d811cd2a7'; // Replace with your actual app secret
+
+  const response = await fetch('https://api.astronomyapi.com/v2/authenticate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      app_id: appId,
+      app_secret: appSecret,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to authenticate');
+  }
+
+  const data = await response.json();
+  return data.access_token;  // Return the token
+}
